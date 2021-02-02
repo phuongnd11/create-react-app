@@ -11,6 +11,7 @@ class PlayerStatsComponent extends Component {
             playerStats: [],
             loaded: false,
             overviewFetched: false,
+            winrateByDayFetched: false,
             playerUsername: ""
         }
         this.refreshStats = this.refreshStats.bind(this);
@@ -44,15 +45,26 @@ class PlayerStatsComponent extends Component {
             );
 
         PlayerStatsDataService.fetchOverview(playerUsername)
-        .then(
-            response => {
-                console.log(response);
-                this.setState({
-                    playerOverview: response.data,
-                    overviewFetched: true
-                })
-            }
-        );    
+            .then(
+                response => {
+                    console.log(response);
+                    this.setState({
+                        playerOverview: response.data,
+                        overviewFetched: true
+                    })
+                }
+            );
+        
+        PlayerStatsDataService.fetchWinrateByDay(playerUsername)
+            .then(
+                response => {
+                    console.log(response);
+                    this.setState({
+                        winrateByDay: response.data,
+                        winrateByDayFetched: true
+                    })
+                }
+            );    
     }
 
     onSubmit(values) {
@@ -82,6 +94,23 @@ class PlayerStatsComponent extends Component {
                     <p>Overview: {this.state.playerOverview.style}</p>
                 }  
                 <p> </p>
+                {this.state.winrateByDayFetched && 
+                    <p>
+                        Winrate by day:
+                    </p>
+                }  
+                {this.state.winrateByDayFetched && 
+                    <p>
+                        Monday: {this.state.winrateByDay.MONDAY.winRate}% &nbsp;
+                        Tuesday: {this.state.winrateByDay.TUESDAY.winRate}% &nbsp;
+                        Wednesday: {this.state.winrateByDay.WEDNESDAY.winRate}% &nbsp;
+                        Thursday: {this.state.winrateByDay.THURSDAY.winRate}% &nbsp;
+                        Friday: {this.state.winrateByDay.FRIDAY.winRate}% &nbsp;
+                        Saturday: {this.state.winrateByDay.SATURDAY.winRate}% &nbsp;
+                        Sunday: {this.state.winrateByDay.SUNDAY.winRate}% &nbsp;
+                    </p>
+                }  
+                <p> </p>
                 {this.state.loaded && 
                     <table className="table table-striped">
                         <thead>
@@ -90,7 +119,7 @@ class PlayerStatsComponent extends Component {
                                 <th>White won (%)</th>
                                 <th>White games</th>
                                 <th>Black won (%)</th>
-                                <th>Back games</th>
+                                <th>Black games</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -17,6 +17,10 @@ class PlayerStatsDataService {
     fetchOverview(playerUsername) {
         return axios.get(`${REPORT_URL}/overview?playerUsername=` + playerUsername);
     }
+
+    fetchWinrateByDay(playerUsername) {
+        return axios.get(`${REPORT_URL}/winratebyday?playerUsername=` + playerUsername);
+    }
 }
 
 
