@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PlayerStatsDataService from '../service/PlayerStatsDataService';
+import FetchQuote from "../service/QuotesFetcher";
 import { Route , withRouter} from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
@@ -88,12 +89,16 @@ class PlayerStatsComponent extends Component {
                             </Form>
                         )
                     }
-                </Formik>      
+                </Formik>    
+                <FetchQuote/>  
                 <p> </p>
                 {this.state.overviewFetched && 
-                    <p>Overview: {this.state.playerOverview.style}</p>
+                    <p>Games analyzed: {this.state.playerOverview.gamesAnalyzed}</p> 
+                }
+                {this.state.overviewFetched && 
+                    <p>Number of backward moves (in first 30 moves): {this.state.playerOverview.numberOfBackwardMoves}. Average: {
+                        this.state.playerOverview.numberOfBackwardMoves/this.state.playerOverview.gamesAnalyzed} backward move per game.</p> 
                 }  
-                <p> </p>
                 {this.state.winrateByDayFetched && 
                     <p>
                         Winrate by day:
@@ -109,6 +114,10 @@ class PlayerStatsComponent extends Component {
                         Saturday: {this.state.winrateByDay.SATURDAY.winRate}% &nbsp;
                         Sunday: {this.state.winrateByDay.SUNDAY.winRate}% &nbsp;
                     </p>
+                }  
+                <p> </p>
+                {this.state.overviewFetched &&  
+                    <p>Opening overview: {this.state.playerOverview.style}</p>
                 }  
                 <p> </p>
                 {this.state.loaded && 
