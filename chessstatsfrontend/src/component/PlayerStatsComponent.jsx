@@ -114,7 +114,20 @@ class PlayerStatsComponent extends Component {
                         Saturday: {this.state.winrateByDay.SATURDAY.winRate}% &nbsp;
                         Sunday: {this.state.winrateByDay.SUNDAY.winRate}% &nbsp;
                     </p>
-                }  
+                } 
+                {this.state.overviewFetched && 
+                    <p>
+                        Winrate by opponent rating: Lower rated - {this.state.playerOverview.winRateByOpponentRating.LOWER_RATED.winRate}% &nbsp;
+                        Higher rated - {this.state.playerOverview.winRateByOpponentRating.HIGHER_RATED.winRate}%
+                    </p> 
+                }   
+                {this.state.overviewFetched && 
+                    <p>
+                        Winrate by castle type: Castle short - {this.state.playerOverview.winRateByCastle.SHORT.winRate}% &nbsp;
+                        Castle long - {this.state.playerOverview.winRateByCastle.LONG.winRate}% &nbsp;
+                        No castle - {this.state.playerOverview.winRateByCastle.NONE.winRate}% &nbsp;
+                    </p> 
+                }
                 <p> </p>
                 {this.state.overviewFetched &&  
                     <p>Opening overview: {this.state.playerOverview.style}</p>
