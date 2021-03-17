@@ -33,6 +33,7 @@ class PlayerStatsComponent extends Component {
     }
 
     refreshStats(playerUsername) {
+        this.setState({isLoading: true});
         PlayerStatsDataService.fetchPlayerStats(playerUsername)
             .then(
                 response => {
@@ -40,7 +41,8 @@ class PlayerStatsComponent extends Component {
                     this.setState({
                         playerStats: response.data,
                         playerUsername: playerUsername,     
-                        loaded: true
+                        loaded: true,
+                        isLoading: false
                     })
                 }
             );
@@ -85,7 +87,8 @@ class PlayerStatsComponent extends Component {
                                     <label>Chess.com username: </label>
                                     <Field className="form-group" type="text" name="playerUsername" />
                                 </fieldset>                               
-                                <button className="btn btn-success" type="submit">Get stats</button>  
+                                <button className="btn btn-success" type="submit">{this.state.isLoading ? "Analyzing games.." : "Get Stats"
+                }</button>  
                             </Form>
                         )
                     }
